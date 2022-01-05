@@ -1,0 +1,26 @@
+type AuctionBidEntity @entity {
+  id: ID!
+  sender: Bytes! # address
+  nounId: BigInt! # uint256
+  value: BigInt! # uint256
+  extended: Boolean! # bool
+  timestamp: BigInt! # uint256
+  auction: Auction!
+}
+
+type Auction @entity {
+  id: ID!
+  auctionBids: [AuctionBidEntity!]! @derivedFrom(field: "auction")
+}
+
+type LogPriceUpdatedEntity @entity {
+  id: ID!
+  newPrice: BigInt!
+  timestamp: BigInt! # uint256
+  loggedPrices: LoggedPrices!
+}
+
+type LoggedPrices @entity {
+  id: ID!
+  updatedPrices: [LogPriceUpdatedEntity!]! @derivedFrom(field: "loggedPrices")
+}
